@@ -1,6 +1,7 @@
 version: 0.2
 
 env:
+  variables: {}
   parameter-store:
     DOCKER_REGISTRY_USERNAME: /myapp/docker-credentials/username
     DOCKER_REGISTRY_PASSWORD: /myapp/docker-credentials/password
@@ -10,7 +11,6 @@ phases:
     runtime-versions:
       python: 3.11
   pre_build:
-    commands:
   commands:
     - echo "Installing dependencies..."
     - pip install -r day-14/simple-python-app/requirements.txt

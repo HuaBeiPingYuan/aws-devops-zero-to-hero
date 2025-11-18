@@ -1,7 +1,7 @@
 version: 0.2
 
 env:
-  variables: {}
+  variables: {} 
   parameter-store:
     DOCKER_REGISTRY_USERNAME: /myapp/docker-credentials/username
     DOCKER_REGISTRY_PASSWORD: /myapp/docker-credentials/password
@@ -11,12 +11,12 @@ phases:
     runtime-versions:
       python: 3.11
   pre_build:
-  commands:
-    - echo "Installing dependencies..."
-    - pip install -r day-14/simple-python-app/requirements.txt
-    - echo "Running tests..."
-    - cd day-14/simple-python-app/
-    - python -m unittest test -v
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r day-14/simple-python-app/requirements.txt
+      - echo "Running tests..."
+      - cd day-14/simple-python-app/
+      - python -m unittest test -v
   build:
     commands:
       - echo "Running tests..."
@@ -28,7 +28,3 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully!"
-artifacts:
-  files:
-    - "**/*"
-  base-directory: ../simple-python-app

@@ -1,7 +1,7 @@
 version: 0.2
 
 env:
-  variables: {} 
+  variables: {}
   parameter-store:
     DOCKER_REGISTRY_USERNAME: /myapp/docker-credentials/username
     DOCKER_REGISTRY_PASSWORD: /myapp/docker-credentials/password
@@ -13,18 +13,17 @@ phases:
   pre_build:
     commands:
       - echo "Installing dependencies..."
-      - pip install -r day-14/simple-python-app/requirements.txt
+      - pip install -r "$CODEBUILD_SRC_DIR/day-14/simple-python-app/requirements.txt"
       - echo "Running tests..."
-      - cd day-14/simple-python-app/
-      - python -m unittest test -v
+      - cd "$CODEBUILD_SRC_DIR/day-14/simple-python-app"
+      - python -m unittest discover -v
   build:
     commands:
-      - echo "Running tests..."
-      - cd day-14/simple-python-app/
+      - cd "$CODEBUILD_SRC_DIR/day-14/simple-python-app"
       - echo "Building Docker image..."
-      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin
       - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest" .
-      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest"
+      - docker push "$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest"
   post_build:
     commands:
       - echo "Build completed successfully!"

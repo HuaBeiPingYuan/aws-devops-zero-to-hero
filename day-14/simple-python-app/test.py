@@ -11,9 +11,18 @@ class TestFlaskApp(unittest.TestCase):
     def test_hello_route(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data.decode(), "Hello, world!")
+        self.assertIn("Version 2.0", response.data.decode())
+
+    def test_health_route(self):
+        response = self.client.get("/health")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("healthy", response.data.decode())
+
+    def test_info_route(self):
+        response = self.client.get("/info")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("CodePipeline test successful", response.data.decode())
 
 
-# ↓↓↓ ADD THIS LINE ↓↓↓
 if __name__ == "__main__":
     unittest.main()

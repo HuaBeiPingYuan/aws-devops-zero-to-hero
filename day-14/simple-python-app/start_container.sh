@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-# Pull the Docker image from Docker Hub
-echo
+containerID=docker ps | awk -F" " '{Print $1}'
 
-# Run the Docker image as a container
-echo
+docker rm -f $containerID
